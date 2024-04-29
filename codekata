@@ -1,0 +1,108 @@
+function sumOfTwoNumbers(num1, num2) {
+    return num1 + num2;
+}
+
+function solution(num1, num2) {
+    var answer = num1 - num2;
+    return answer;
+}
+
+function solution(num1, num2) {
+    return num1 * num2;
+}
+
+function solution(num1, num2) {
+    return Math.floor(num1 / num2);
+}
+
+function solution(num1, num2) {
+    return Math.floor((num1 / num2) * 1000);
+}
+
+function solution(age) {
+    const currentYear = 2022;
+    const birthYear = currentYear - age + 1;
+    return birthYear;
+}
+
+function solution(angle) {
+    if (angle > 0 && angle < 90) {
+        return 1;
+    } else if (angle === 90) {
+        return 2;
+    } else if (angle > 90 && angle < 180) {
+        return 3;
+    } else if (angle === 180) {
+        return 4;
+    }
+}
+
+function solution(num1, num2) {
+    if (num1 === num2) {
+        return 1;
+    } else {
+        return -1;
+    }
+}
+
+function solution(n) {
+    let sum = 0;
+    for (let i = 2; i <= n; i += 2) {
+        sum += i;
+    }
+    return sum;
+}
+
+function solution(numbers) {
+    const sum = numbers.reduce((acc, curr) => acc + curr, 0);
+    return sum / numbers.length;
+}
+
+function solution(num) {
+    if (num % 2 === 0) {
+        return "Even";
+    } else {
+        return "Odd";
+    }
+}
+
+function solution(arr) {
+    const sum = arr.reduce((acc, curr) => acc + curr, 0);
+    return sum / arr.length;
+}
+
+function solution(num1, num2) {
+    return num1 % num2;
+}
+
+function solution(N) {
+    // Convert the number to a string to iterate through each digit
+    const digits = N.toString();
+    // Initialize a variable to store the sum of the digits
+    let digitSum = 0;
+    // Iterate through each digit in the string
+    for (let i = 0; i < digits.length; i++) {
+        // Convert the digit back to a number and add it to the sum
+        digitSum += parseInt(digits[i]);
+    }
+    // Return the sum of the digits
+    return digitSum;
+}
+
+// Test cases
+console.log(solution(123)); // Output: 6
+console.log(solution(987)); // Output: 24
+
+function solution(n) {
+    let divisorSum = 0;
+    for (let i = 1; i <= n; i++) {
+        if (n % i === 0) {
+            divisorSum += i;
+        }
+    }
+    return divisorSum;
+}
+
+// 테스트
+console.log(solution(12)); // 출력: 28
+console.log(solution(5));  // 출력: 6
