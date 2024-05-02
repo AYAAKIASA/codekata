@@ -1,0 +1,21 @@
+function solution(s) {
+    let sign = 1;
+    let index = 0;
+    
+    if (s[0] === '-' || s[0] === '+') {
+        sign = s[0] === '-' ? -1 : 1;
+        index = 1;
+    }
+    
+    let answer = 0;
+    while (index < s.length) {
+        const digit = parseInt(s[index]);
+        answer = answer * 10 + digit;
+        index++;
+    }
+    
+    return sign * answer;
+}
+
+console.log(solution("1234"));  // Output: 1234
+console.log(solution("-1234")); // Output: -1234
