@@ -1,0 +1,12 @@
+function solution(n) {
+    let sqrt_n = Math.sqrt(n);
+    if (Number.isInteger(sqrt_n)) {
+        return Math.pow(sqrt_n + 1, 2);
+    } else {
+        return -1;
+    }
+}
+
+// 테스트 케이스
+console.log(solution(121)); // 출력: 144
+console.log(solution(3));   // 출력: -1
