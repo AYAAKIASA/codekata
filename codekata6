@@ -1,0 +1,50 @@
+function solution(n) {
+    // Convert the number to a string to manipulate its digits
+    var str = n.toString();
+    
+    // Convert the string to an array of characters, sort them in descending order, then join them back into a string
+    var sortedStr = str.split('').sort((a, b) => b - a).join('');
+    
+    // Convert the sorted string back to an integer
+    var result = parseInt(sortedStr);
+    
+    return result;
+}
+
+// Test cases
+console.log(solution(118372)); // Output: 873211
+
+function solution(x) {
+    // Convert the number to a string to manipulate its digits
+    var str = x.toString();
+    
+    // Calculate the sum of the digits
+    var sum = 0;
+    for (var i = 0; i < str.length; i++) {
+        sum += parseInt(str[i]);
+    }
+    
+    // Check if the number is divisible by the sum of its digits
+    return x % sum === 0;
+}
+
+// Test cases
+console.log(solution(10)); // Output: true
+console.log(solution(12)); // Output: true
+console.log(solution(11)); // Output: false
+console.log(solution(13)); // Output: false
+
+function solution(a, b) {
+    // Calculate the number of terms between a and b
+    var n = Math.abs(b - a) + 1;
+    
+    // Calculate the sum using the formula for the sum of an arithmetic series
+    var sum = (n / 2) * (a + b);
+    
+    return sum;
+}
+
+// Test cases
+console.log(solution(3, 5)); // Output: 12
+console.log(solution(3, 3)); // Output: 3
+console.log(solution(5, 3)); // Output: 12
