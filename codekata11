@@ -1,0 +1,18 @@
+function solution(arr) {
+    // Find the smallest number in the array
+    const min = Math.min(...arr);
+    
+    // Remove the smallest number from the array
+    const modifiedArr = arr.filter(num => num !== min);
+    
+    // Check if the modified array is empty
+    if (modifiedArr.length === 0) {
+        return [-1]; // If empty, return [-1]
+    } else {
+        return modifiedArr; // Otherwise, return the modified array
+    }
+}
+
+// Test cases
+console.log(solution([4, 3, 2, 1])); // Output: [4, 3, 2]
+console.log(solution([10])); // Output: [-1]
