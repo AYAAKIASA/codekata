@@ -1,1 +1,8 @@
+function solution(a, b) {
+    var dotProduct = 0;
+    for (var i = 0; i < a.length; i++) {
+        dotProduct += a[i] * b[i];
+    }
+    return dotProduct;
+}
 
