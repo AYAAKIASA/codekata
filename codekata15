@@ -1,0 +1,72 @@
+function solution(left, right) {
+    var answer = 0;
+    
+    for (var num = left; num <= right; num++) {
+        var divisors = countDivisors(num);
+        if (divisors % 2 === 0) {
+            answer += num; // add if even number of divisors
+        } else {
+            answer -= num; // subtract if odd number of divisors
+        }
+    }
+    
+    return answer;
+}
+
+// Function to count the number of divisors for a given number
+function countDivisors(num) {
+    var count = 0;
+    for (var i = 1; i <= num; i++) {
+        if (num % i === 0) {
+            count++;
+        }
+    }
+    return count;
+}
+
+// Test cases
+console.log(solution(13, 17)); // Output should be 43
+console.log(solution(24, 27)); // Output should be 52
+
+function solution(s) {
+    var lowerCaseLetters = '';
+    var upperCaseLetters = '';
+    
+    // Separate lowercase and uppercase letters
+    for (var i = 0; i < s.length; i++) {
+        if (s[i] >= 'a' && s[i] <= 'z') {
+            lowerCaseLetters += s[i];
+        } else {
+            upperCaseLetters += s[i];
+        }
+    }
+    
+    // Sort lowercase letters in descending order
+    lowerCaseLetters = lowerCaseLetters.split('').sort().reverse().join('');
+    // Sort uppercase letters in descending order
+    upperCaseLetters = upperCaseLetters.split('').sort().reverse().join('');
+    
+    // Concatenate and return the sorted string
+    return lowerCaseLetters + upperCaseLetters;
+}
+
+// Test case
+console.log(solution("Zbcdefg")); // Output should be "gfedcbZ"
+
+function solution(price, money, count) {
+    var totalFee = 0;
+
+    // Calculate the total fee for using the ride count times
+    for (var i = 1; i <= count; i++) {
+        totalFee += price * i;
+    }
+
+    // Check if the money is sufficient
+    var insufficientMoney = totalFee - money;
+
+    // Return the result
+    return Math.max(0, insufficientMoney);
+}
+
+// Test case
+console.log(solution(3, 20, 4)); // Output should be 10
