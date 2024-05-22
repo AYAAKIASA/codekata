@@ -1,0 +1,13 @@
+process.stdin.setEncoding('utf8');
+
+process.stdin.on('data', data => {
+    const input = data.trim().split(" ");
+    const n = Number(input[0]);  // Width
+    const m = Number(input[1]);  // Height
+    
+    const line = '*'.repeat(n);
+    
+    for (let i = 0; i < m; i++) {
+        console.log(line);
+    }
+});
