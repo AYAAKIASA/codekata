@@ -1,0 +1,22 @@
+function solution(n, m) {
+    // Helper function to compute the GCD using Euclidean algorithm
+    function gcd(a, b) {
+        while (b !== 0) {
+            [a, b] = [b, a % b];
+        }
+        return a;
+    }
+
+    // Calculate the GCD of n and m
+    const gcdResult = gcd(n, m);
+    
+    // Calculate the LCM using the relationship with GCD
+    const lcmResult = (n * m) / gcdResult;
+    
+    // Return the results as an array
+    return [gcdResult, lcmResult];
+}
+
+// Example usage:
+console.log(solution(3, 12));  // Output: [3, 12]
+console.log(solution(2, 5));   // Output: [1, 10]
