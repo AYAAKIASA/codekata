@@ -1,0 +1,16 @@
+function solution(n) {
+    // Step 1: Convert the number to a base-3 string
+    let base3 = n.toString(3);
+
+    // Step 2: Reverse the base-3 string
+    let reversedBase3 = base3.split('').reverse().join('');
+
+    // Step 3: Convert the reversed base-3 string back to a decimal number
+    let result = parseInt(reversedBase3, 3);
+
+    return result;
+}
+
+// Test cases
+console.log(solution(45));  // Output: 7
+console.log(solution(125)); // Output: 229
