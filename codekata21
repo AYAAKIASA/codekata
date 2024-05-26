@@ -1,0 +1,70 @@
+function solution(s) {
+    let words = s.split(' ');
+    
+    let transformedWords = [];
+    
+    for (let word of words) {
+        let transformedWord = '';
+        
+        for (let i = 0; i < word.length; i++) {
+            if (i % 2 === 0) {
+                transformedWord += word[i].toUpperCase();
+            } else {
+                transformedWord += word[i].toLowerCase();
+            }
+        }
+        
+        transformedWords.push(transformedWord);
+    }
+    
+    return transformedWords.join(' ');
+}
+
+console.log(solution("try hello world")); // 출력: "TrY HeLlO WoRlD"
+
+function solution(number) {
+    let count = 0;
+    const n = number.length;
+    
+    // Iterate over all possible triplets
+    for (let i = 0; i < n - 2; i++) {
+        for (let j = i + 1; j < n - 1; j++) {
+            for (let k = j + 1; k < n; k++) {
+                // Check if the sum of the triplet is zero
+                if (number[i] + number[j] + number[k] === 0) {
+                    count++;
+                }
+            }
+        }
+    }
+    
+    return count;
+}
+
+// Test cases
+console.log(solution([-2, 3, 0, 2, -5])); // Output: 2
+console.log(solution([-3, -2, -1, 0, 1, 2, 3])); // Output: 5
+console.log(solution([-1, 1, -1, 1])); // Output: 0
+
+function solution(t, p) {
+    let count = 0;
+    let pLength = p.length;
+    let pNumber = BigInt(p);  // Convert p to BigInt for accurate comparison
+
+    // Iterate over t to extract all substrings of length p.length
+    for (let i = 0; i <= t.length - pLength; i++) {
+        let substring = t.substring(i, i + pLength);
+        let substringNumber = BigInt(substring);  // Convert substring to BigInt
+        if (substringNumber <= pNumber) {
+            count++;
+        }
+    }
+    
+    return count;
+}
+
+// Test cases
+console.log(solution("3141592", "271")); // Output: 2
+console.log(solution("500220839878", "7")); // Output: 8
+console.log(solution("10203", "15")); // Output: 3
+
