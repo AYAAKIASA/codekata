@@ -1,0 +1,26 @@
+function solution(s, n) {
+    var answer = '';
+
+    for (var i = 0; i < s.length; i++) {
+        var char = s[i];
+        if (char >= 'A' && char <= 'Z') {
+            // Shift uppercase letters
+            var newChar = String.fromCharCode((char.charCodeAt(0) - 'A'.charCodeAt(0) + n) % 26 + 'A'.charCodeAt(0));
+            answer += newChar;
+        } else if (char >= 'a' && char <= 'z') {
+            // Shift lowercase letters
+            var newChar = String.fromCharCode((char.charCodeAt(0) - 'a'.charCodeAt(0) + n) % 26 + 'a'.charCodeAt(0));
+            answer += newChar;
+        } else {
+            // Keep spaces as is
+            answer += char;
+        }
+    }
+    
+    return answer;
+}
+
+// Example usage:
+console.log(solution("AB", 1)); // "BC"
+console.log(solution("z", 1));  // "a"
+console.log(solution("a B z", 4));  // "e F d"
