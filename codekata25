@@ -1,0 +1,22 @@
+function solution(strings, n) {
+    // Sorting the strings using a custom comparator function
+    strings.sort((a, b) => {
+        // Compare nth characters first
+        if (a[n] < b[n]) return -1;
+        if (a[n] > b[n]) return 1;
+        // If nth characters are the same, compare the whole strings
+        if (a < b) return -1;
+        if (a > b) return 1;
+        return 0;
+    });
+    return strings;
+}
+
+// Example usage:
+const strings1 = ["sun", "bed", "car"];
+const n1 = 1;
+console.log(solution(strings1, n1));  // Output: ["car", "bed", "sun"]
+
+const strings2 = ["abce", "abcd", "cdx"];
+const n2 = 2;
+console.log(solution(strings2, n2));  // Output: ["abcd", "abce", "cdx"]
