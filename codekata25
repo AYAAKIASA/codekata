@@ -20,3 +20,24 @@ console.log(solution(strings1, n1));  // Output: ["car", "bed", "sun"]
 const strings2 = ["abce", "abcd", "cdx"];
 const n2 = 2;
 console.log(solution(strings2, n2));  // Output: ["abcd", "abce", "cdx"]
+
+function solution(array, commands) {
+    var answer = [];
+
+    commands.forEach(command => {
+        const [i, j, k] = command;
+        // Extract subarray (1-based indices to 0-based indices)
+        const subarray = array.slice(i - 1, j);
+        // Sort the subarray
+        subarray.sort((a, b) => a - b);
+        // Find the k-th element
+        answer.push(subarray[k - 1]);
+    });
+
+    return answer;
+}
+
+// Example usage:
+const array = [1, 5, 2, 6, 3, 7, 4];
+const commands = [[2, 5, 3], [4, 4, 1], [1, 7, 3]];
+console.log(solution(array, commands));  // Output: [5, 6, 3]
