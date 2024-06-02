@@ -1,0 +1,20 @@
+function solution(s) {
+    let result = [];
+    let lastSeen = {};
+    
+    for (let i = 0; i < s.length; i++) {
+        let char = s[i];
+        if (lastSeen.hasOwnProperty(char)) {
+            result.push(i - lastSeen[char]);
+        } else {
+            result.push(-1);
+        }
+        lastSeen[char] = i;
+    }
+    
+    return result;
+}
+
+// Test cases
+console.log(solution("banana"));  // Output: [-1, -1, -1, 2, 2, 2]
+console.log(solution("foobar"));  // Output: [-1, -1, 1, -1, -1, -1]
