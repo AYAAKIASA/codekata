@@ -1,0 +1,32 @@
+function solution(a, b, n) {
+    var answer = 0;
+    var emptyBottles = n;
+    
+    while (emptyBottles >= a) {
+        var exchangedCokes = Math.floor(emptyBottles / a) * b;
+        answer += exchangedCokes;
+        emptyBottles = exchangedCokes + (emptyBottles % a);
+    }
+    
+    return answer;
+}
+
+// Test cases
+console.log(solution(2, 1, 20)); // Output should be 19
+console.log(solution(3, 1, 20)); // Output should be 9
+
+function solution(k, score) {
+    var answer = [];
+    var result = [];
+    for (var i =0; i < score.length; i++) {
+        result.push(score[i]);
+        result.sort ((a,b) => b-a );
+        
+        if (result.length >= k ) {
+            answer.push(result[k - 1]);
+            continue;
+        }
+        answer.push(result[result.length -1]);
+    }
+    return answer;
+}
