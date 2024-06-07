@@ -37,3 +37,23 @@ function solution(cards1, cards2, goal) {
 // Example usage:
 console.log(solution(["i", "drink", "water"], ["want", "to"], ["i", "want", "to", "drink", "water"])); // "Yes"
 console.log(solution(["i", "water", "drink"], ["want", "to"], ["i", "want", "to", "drink", "water"])); // "No"
+
+function solution(k, m, score) {
+    // Step 1: Sort the scores in descending order
+    score.sort((a, b) => b - a);
+    
+    let maxProfit = 0;
+    
+    // Step 2: Iterate over the sorted list and create boxes of size m
+    for (let i = 0; i + m <= score.length; i += m) {
+        let box = score.slice(i, i + m);
+        let lowestScoreInBox = box[m - 1];
+        maxProfit += lowestScoreInBox * m;
+    }
+    
+    return maxProfit;
+}
+
+// Example usage:
+console.log(solution(3, 4, [1, 2, 3, 1, 2, 3, 1])); // 8
+console.log(solution(4, 3, [4, 1, 2, 2, 4, 4, 4, 4, 1, 2, 4, 2])); // 33
