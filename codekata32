@@ -1,0 +1,13 @@
+function solution(n, m, section) {
+    let count = 0;
+    let last_painted = 0;
+    
+    for (let sec of section) {
+        if (sec > last_painted) {
+            count++;
+            last_painted = sec + m - 1;
+        }
+    }
+    
+    return count;
+}
