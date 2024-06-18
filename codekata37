@@ -1,0 +1,33 @@
+function solution(keymap, targets) {
+    // Step 1: Create a mapping of character to its minimum key presses
+    let charToMinPresses = {};
+    
+    keymap.forEach((keyStr, keyIndex) => {
+        for (let i = 0; i < keyStr.length; i++) {
+            let char = keyStr[i];
+            let presses = i + 1;  // Number of presses to get this character on this key
+            if (charToMinPresses[char] === undefined || presses < charToMinPresses[char]) {
+                charToMinPresses[char] = presses;
+            }
+        }
+    });
+
+    // Step 2: Calculate the minimum key presses for each target string
+    let results = targets.map(target => {
+        let totalPresses = 0;
+        
+        for (let i = 0; i < target.length; i++) {
+            let char = target[i];
+            if (charToMinPresses[char] === undefined) {
+                return -1;  // Character not found in keymap
+            } else {
+                totalPresses += charToMinPresses[char];
+            }
+        }
+        
+        return totalPresses;
+    });
+
+    // Step 3: Return the results
+    return results;
+}
