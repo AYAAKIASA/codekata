@@ -1,0 +1,29 @@
+function solution(s, skip, index) {
+    const skipSet = new Set(skip);
+    const alphabetLength = 26;
+    
+    function getNextChar(c, index) {
+        let currentPos = c.charCodeAt(0) - 'a'.charCodeAt(0);
+        let shiftsRemaining = index;
+        
+        while (shiftsRemaining > 0) {
+            currentPos = (currentPos + 1) % alphabetLength;
+            let nextChar = String.fromCharCode(currentPos + 'a'.charCodeAt(0));
+            if (!skipSet.has(nextChar)) {
+                shiftsRemaining--;
+            }
+        }
+        
+        return String.fromCharCode(currentPos + 'a'.charCodeAt(0));
+    }
+    
+    let result = '';
+    for (let i = 0; i < s.length; i++) {
+        result += getNextChar(s[i], index);
+    }
+    
+    return result;
+}
+
+// Example usage:
+console.log(solution("aukks", "wbqd", 5)); // Output: "happy"
