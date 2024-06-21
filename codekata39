@@ -52,3 +52,23 @@ function solution(survey, choices) {
     
     return result;
 }
+
+function solution(wallpaper) {
+    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    
+    // Iterate over each cell in the grid
+    for (let i = 0; i < wallpaper.length; i++) {
+        for (let j = 0; j < wallpaper[i].length; j++) {
+            if (wallpaper[i][j] === '#') {
+                // Update the boundaries of the rectangle
+                if (i < minX) minX = i;
+                if (i > maxX) maxX = i;
+                if (j < minY) minY = j;
+                if (j > maxY) maxY = j;
+            }
+        }
+    }
+    
+    // The end coordinates should be incremented by 1 since they are inclusive in the problem description
+    return [minX, minY, maxX + 1, maxY + 1];
+}
