@@ -1,0 +1,30 @@
+function solution(players, callings) {
+    // Initialize index map for quick access
+    let indexMap = new Map();
+    for (let i = 0; i < players.length; i++) {
+        indexMap.set(players[i], i);
+    }
+    
+    // Process each calling
+    for (let i = 0; i < callings.length; i++) {
+        let currentName = callings[i];
+        let current_index = indexMap.get(currentName);
+        
+        // Swap the current athlete with the one in front of them
+        let temp = players[current_index];
+        players[current_index] = players[current_index - 1];
+        players[current_index - 1] = temp;
+        
+        // Update indexMap
+        indexMap.set(players[current_index], current_index);
+        indexMap.set(players[current_index - 1], current_index - 1);
+    }
+    
+    // Return the final order of players
+    return players;
+}
+
+// Example usage:
+let players = ["mumu", "soe", "poe", "kai", "mine"];
+let callings = ["kai", "kai", "mine", "mine"];
+console.log(solution(players, callings)); // Output: ["mumu", "kai", "mine", "soe", "poe"]
