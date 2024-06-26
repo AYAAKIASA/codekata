@@ -1,0 +1,59 @@
+function solution(id_list, report, k) {
+    // Step 1: Initialize dictionaries
+    const reportCount = {};
+    const userReports = {};
+
+    // Initialize report count and user reports structures
+    id_list.forEach(id => {
+        reportCount[id] = 0;
+        userReports[id] = new Set();
+    });
+
+    // Step 2: Parse the reports to fill in userReports
+    report.forEach(rep => {
+        const [reporter, reported] = rep.split(' ');
+        userReports[reporter].add(reported);
+    });
+
+    // Step 3: Count reports for each user
+    for (const reporter in userReports) {
+        userReports[reporter].forEach(reported => {
+            reportCount[reported]++;
+        });
+    }
+
+    // Step 4: Identify suspended users
+    const suspendedUsers = new Set();
+    for (const user in reportCount) {
+        if (reportCount[user] >= k) {
+            suspendedUsers.add(user);
+        }
+    }
+
+    // Step 5: Notify reporting users
+    const resultEmails = {};
+    id_list.forEach(id => resultEmails[id] = 0);
+
+    for (const reporter in userReports) {
+        userReports[reporter].forEach(reported => {
+            if (suspendedUsers.has(reported)) {
+                resultEmails[reporter]++;
+            }
+        });
+    }
+
+    // Prepare the result in the order of id_list
+    const result = id_list.map(id => resultEmails[id]);
+    return result;
+}
+
+// Example usage:
+const id_list = ["muzi", "frodo", "apeach", "neo"];
+const report = ["muzi frodo", "apeach frodo", "frodo neo", "muzi neo", "apeach muzi"];
+const k = 2;
+console.log(solution(id_list, report, k));  // Output: [2, 1, 1, 0]
+
+const id_list2 = ["con", "ryan"];
+const report2 = ["ryan con", "ryan con", "ryan con", "ryan con"];
+const k2 = 3;
+console.log(solution(id_list2, report2, k2));  // Output: [0, 0]
