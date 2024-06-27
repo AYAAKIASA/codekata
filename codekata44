@@ -1,0 +1,16 @@
+function solution(s) {
+    // Split the string by spaces to get an array of string numbers
+    const numbers = s.split(' ');
+    
+    // Convert the string numbers to integers
+    const intNumbers = numbers.map(Number);
+    
+    // Find the minimum value in the array
+    const minValue = Math.min(...intNumbers);
+    
+    // Find the maximum value in the array
+    const maxValue = Math.max(...intNumbers);
+    
+    // Return the result in the format "(minimum value) (maximum value)"
+    return `${minValue} ${maxValue}`;
+}
