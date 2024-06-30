@@ -1,0 +1,58 @@
+function solution(s) {
+    // Split the string by spaces
+    var words = s.split(' ');
+
+    // Process each word
+    var jadenCaseWords = words.map(word => {
+        if (word.length > 0) {
+            // Check if the first character is an alphabet
+            if (/[a-zA-Z]/.test(word[0])) {
+                // Convert first character to uppercase and the rest to lowercase
+                return word[0].toUpperCase() + word.slice(1).toLowerCase();
+            } else {
+                // Convert the whole word to lowercase if the first character is not an alphabet
+                return word.toLowerCase();
+            }
+        }
+        return word;
+    });
+
+    // Join the processed words with spaces
+    return jadenCaseWords.join(' ');
+}
+
+function solution(s) {
+    let numConversions = 0;
+    let numZerosRemoved = 0;
+    
+    while (s !== "1") {
+        // Count the number of zeros and remove them
+        const zerosRemoved = s.split('0').length - 1;
+        numZerosRemoved += zerosRemoved;
+        
+        // Remove zeros and get the length of the remaining string
+        s = s.replace(/0/g, '');
+        const newLength = s.length;
+        
+        // Convert the new length to binary
+        s = newLength.toString(2);
+        
+        // Increment the number of conversions
+        numConversions++;
+    }
+    
+    return [numConversions, numZerosRemoved];
+}
+
+function solution(n) {
+    const MOD = 1234567;
+    let a = 0, b = 1, temp;
+    
+    for (let i = 2; i <= n; i++) {
+        temp = (a + b) % MOD;
+        a = b;
+        b = temp;
+    }
+    
+    return b;
+}
