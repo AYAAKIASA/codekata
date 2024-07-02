@@ -1,0 +1,21 @@
+function solution(n, a, b) {
+    let round = 1;
+    
+    // Ensure A is always less than B for simplicity
+    if (a > b) [a, b] = [b, a];
+    
+    while (true) {
+        if ((a + 1) === b && (a % 2 === 1)) {
+            return round;
+        }
+        
+        // Update positions for the next round
+        a = Math.ceil(a / 2);
+        b = Math.ceil(b / 2);
+        
+        round += 1;
+    }
+}
+
+// Example usage:
+console.log(solution(8, 4, 7));  // Output: 3
