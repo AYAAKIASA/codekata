@@ -1,0 +1,30 @@
+function gcd(a, b) {
+    // Euclidean algorithm to find the GCD of a and b
+    while (b !== 0) {
+        let temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+
+function lcm(a, b) {
+    // Calculate the LCM of a and b using the GCD
+    return (a * b) / gcd(a, b);
+}
+
+function solution(arr) {
+    // Start with the first element of the array
+    let currentLcm = arr[0];
+
+    // Iterate through the array and calculate the LCM iteratively
+    for (let i = 1; i < arr.length; i++) {
+        currentLcm = lcm(currentLcm, arr[i]);
+    }
+
+    return currentLcm;
+}
+
+// Example usage:
+console.log(solution([2, 6, 8, 14])); // Outputs: 168
+console.log(solution([1, 2, 3])); // Outputs: 6
