@@ -13,3 +13,31 @@ function solution(n) {
     
     return dp[n];
 }
+
+function solution(k, tangerine) {
+    // Step 1: Count the frequencies of each size
+    const frequencyMap = {};
+    for (let size of tangerine) {
+        if (frequencyMap[size]) {
+            frequencyMap[size]++;
+        } else {
+            frequencyMap[size] = 1;
+        }
+    }
+    
+    // Step 2: Convert frequency map to an array of [size, count] and sort by count in descending order
+    const sortedFrequencies = Object.entries(frequencyMap).sort((a, b) => b[1] - a[1]);
+    
+    // Step 3: Select sizes until we reach or exceed k tangerines
+    let count = 0;
+    let numTypes = 0;
+    for (let [size, freq] of sortedFrequencies) {
+        count += freq;
+        numTypes++;
+        if (count >= k) {
+            break;
+        }
+    }
+    
+    return numTypes;
+}
