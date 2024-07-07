@@ -1,0 +1,21 @@
+function solution(elements) {
+    const n = elements.length;
+    const extendedArray = elements.concat(elements); // concatenate to handle circular nature
+    let sums = new Set(); // to store unique sums
+    
+    // Iterate over all starting points
+    for (let start = 0; start < n; start++) {
+        let currentSum = 0;
+        
+        // Iterate over all possible lengths of subsequences starting from 'start'
+        for (let length = 1; length <= n; length++) {
+            currentSum += extendedArray[start + length - 1];
+            sums.add(currentSum);
+        }
+    }
+    
+    return sums.size; // return the count of unique sums
+}
+
+// Example usage:
+console.log(solution([7, 9, 1, 1, 4])); // Output: 18
