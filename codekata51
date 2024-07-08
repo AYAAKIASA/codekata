@@ -1,0 +1,20 @@
+function solution(citations) {
+    // Sort the citations array in non-decreasing order
+    citations.sort((a, b) => a - b);
+    
+    let n = citations.length;
+    
+    // Iterate through the sorted list and determine the H-Index
+    for (let i = 0; i < n; i++) {
+        // Check if the number of papers that have at least citations[i] citations
+        // is greater than or equal to citations[i]
+        if (citations[i] >= n - i) {
+            return n - i;
+        }
+    }
+    
+    return 0;
+}
+
+// Test the function with the given example
+console.log(solution([3, 0, 6, 1, 5])); // Output: 3
