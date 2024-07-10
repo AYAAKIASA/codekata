@@ -1,0 +1,29 @@
+function solution(arr1, arr2) {
+    // Get the dimensions of the matrices
+    const m = arr1.length;         // Number of rows in arr1
+    const n = arr1[0].length;      // Number of columns in arr1 and number of rows in arr2
+    const p = arr2[0].length;      // Number of columns in arr2
+
+    // Initialize the resulting matrix with zeros
+    const result = Array.from({ length: m }, () => Array(p).fill(0));
+
+    // Perform matrix multiplication
+    for (let i = 0; i < m; i++) {
+        for (let j = 0; j < p; j++) {
+            for (let k = 0; k < n; k++) {
+                result[i][j] += arr1[i][k] * arr2[k][j];
+            }
+        }
+    }
+
+    return result;
+}
+
+// Example usage:
+const arr1 = [[1, 4], [3, 2], [4, 1]];
+const arr2 = [[3, 3], [3, 3]];
+console.log(solution(arr1, arr2)); // Output: [[15, 15], [15, 15], [15, 15]]
+
+const arr1b = [[2, 3, 2], [4, 2, 4], [3, 1, 4]];
+const arr2b = [[5, 4, 3], [2, 4, 1], [3, 1, 1]];
+console.log(solution(arr1b, arr2b)); // Output: [[22, 22, 11], [36, 28, 18], [29, 20, 14]]
