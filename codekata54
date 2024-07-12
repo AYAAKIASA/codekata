@@ -1,0 +1,93 @@
+function solution(want, number, discount) {
+    // Initialize the dictionary for required items and quantities
+    const requiredItems = {};
+    for (let i = 0; i < want.length; i++) {
+        requiredItems[want[i]] = number[i];
+    }
+
+    // Function to check if current window satisfies the requirement
+    function matchesRequired(currentItems) {
+        for (const item in requiredItems) {
+            if (!currentItems[item] || currentItems[item] < requiredItems[item]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    let count = 0;
+
+    // Iterate over possible starting days for the 10-day window
+    for (let start = 0; start <= discount.length - 10; start++) {
+        const currentItems = {};
+
+        // Count items in the current 10-day window
+        for (let j = start; j < start + 10; j++) {
+            const item = discount[j];
+            if (!currentItems[item]) {
+                currentItems[item] = 0;
+            }
+            currentItems[item]++;
+        }
+
+        // Check if this window matches the required items and quantities
+        if (matchesRequired(currentItems)) {
+            count++;
+        }
+    }
+
+    return count;
+}
+
+function solution(clothes) {
+    // Create a dictionary to store the types and corresponding clothing items
+    let clothesByType = {};
+
+    // Populate the dictionary with clothes categorized by type
+    for (let i = 0; i < clothes.length; i++) {
+        let [name, type] = clothes[i];
+        if (!clothesByType[type]) {
+            clothesByType[type] = [];
+        }
+        clothesByType[type].push(name);
+    }
+
+    // Calculate the number of combinations
+    let combinations = 1;
+    for (let type in clothesByType) {
+        // For each type, calculate the number of ways to wear it (including not wearing any)
+        combinations *= (clothesByType[type].length + 1);
+    }
+
+    // Subtract one to exclude the option of wearing no clothes at all
+    return combinations - 1;
+}
+
+// Test cases
+console.log(solution([["yellow_hat", "headgear"], ["blue_sunglasses", "eyewear"], ["green_turban", "headgear"]])); // Expected output: 5
+console.log(solution([["crow_mask", "face"], ["blue_sunglasses", "face"], ["smoky_makeup", "face"]])); // Expected output: 3
+
+function solution(progresses, speeds) {
+    let answer = [];
+    let daysToComplete = progresses.map((progress, index) => Math.ceil((100 - progress) / speeds[index]));
+    
+    let maxDay = daysToComplete[0];
+    let count = 1;
+    
+    for (let i = 1; i < daysToComplete.length; i++) {
+        if (daysToComplete[i] <= maxDay) {
+            count++;
+        } else {
+            answer.push(count);
+            count = 1;
+            maxDay = daysToComplete[i];
+        }
+    }
+    
+    answer.push(count);
+    return answer;
+}
+
+// Test cases
+console.log(solution([93, 30, 55], [1, 30, 5])); // Expected output: [2, 1]
+console.log(solution([95, 90, 99, 99, 80, 99], [1, 1, 1, 1, 1, 1])); // Expected output: [1, 3, 2]
