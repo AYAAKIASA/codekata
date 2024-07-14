@@ -1,0 +1,27 @@
+function solution(priorities, location) {
+    // Initialize the queue with tuples of (priority, original_index)
+    let queue = priorities.map((priority, idx) => ({ priority, idx }));
+    let executionOrder = 0;
+    
+    while (queue.length > 0) {
+        // Dequeue the first element
+        let current = queue.shift();
+        
+        // Check if there's any process in the queue with higher priority
+        if (queue.some(process => process.priority > current.priority)) {
+            // If a higher priority process exists, reinsert the current process
+            queue.push(current);
+        } else {
+            // Otherwise, this process is executed
+            executionOrder++;
+            if (current.idx === location) {
+                // If the executed process is the one we are interested in, return the order
+                return executionOrder;
+            }
+        }
+    }
+}
+
+// Example Usage
+console.log(solution([2, 1, 3, 2], 2)); // Output: 1
+console.log(solution([1, 1, 9, 1, 1, 1], 0)); // Output: 5
