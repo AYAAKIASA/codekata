@@ -1,0 +1,31 @@
+function solution(k, dungeons) {
+    let maxDungeons = 0;
+
+    function permute(arr, start, k) {
+        if (start === arr.length) {
+            let currentFatigue = k;
+            let count = 0;
+            for (let i = 0; i < arr.length; i++) {
+                const [minReq, consume] = arr[i];
+                if (currentFatigue >= minReq) {
+                    currentFatigue -= consume;
+                    count++;
+                } else {
+                    break;
+                }
+            }
+            maxDungeons = Math.max(maxDungeons, count);
+            return;
+        }
+
+        for (let i = start; i < arr.length; i++) {
+            [arr[start], arr[i]] = [arr[i], arr[start]];
+            permute(arr, start + 1, k);
+            [arr[start], arr[i]] = [arr[i], arr[start]];
+        }
+    }
+
+    permute(dungeons, 0, k);
+
+    return maxDungeons;
+}
