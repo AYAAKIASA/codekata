@@ -1,0 +1,21 @@
+function solution(numbers, target) {
+    let count = 0;
+
+    function dfs(index, currentSum) {
+        if (index === numbers.length) {
+            if (currentSum === target) {
+                count++;
+            }
+            return;
+        }
+        
+        // Include the current number with a plus
+        dfs(index + 1, currentSum + numbers[index]);
+        
+        // Include the current number with a minus
+        dfs(index + 1, currentSum - numbers[index]);
+    }
+
+    dfs(0, 0);
+    return count;
+}
