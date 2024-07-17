@@ -1,0 +1,32 @@
+function solution(n, k) {
+    // Step 1: Convert n to base k
+    const converted = n.toString(k);
+    
+    // Step 2: Split the converted number by '0' to find potential primes
+    const candidates = converted.split('0');
+    
+    // Helper function to check if a number is prime
+    function isPrime(num) {
+        if (num <= 1) return false;
+        if (num <= 3) return true;
+        if (num % 2 === 0 || num % 3 === 0) return false;
+        for (let i = 5; i * i <= num; i += 6) {
+            if (num % i === 0 || num % (i + 2) === 0) return false;
+        }
+        return true;
+    }
+    
+    // Step 3: Check each candidate and count the primes
+    let primeCount = 0;
+    for (const candidate of candidates) {
+        if (candidate.length > 0 && isPrime(Number(candidate))) {
+            primeCount++;
+        }
+    }
+    
+    return primeCount;
+}
+
+// Example usage
+console.log(solution(437674, 3));  // Output: 3
+console.log(solution(110011, 10)); // Output: 2
