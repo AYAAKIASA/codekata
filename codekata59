@@ -1,0 +1,118 @@
+function calculateTimeInMinutes(timeStr) {
+    const [hours, minutes] = timeStr.split(':').map(Number);
+    return hours * 60 + minutes;
+}
+
+function solution(fees, records) {
+    const [defaultTime, defaultFee, unitTime, unitFee] = fees;
+    const parkingTimes = {};
+    const entryTimes = {};
+
+    records.forEach(record => {
+        const [timeStr, carNumber, action] = record.split(' ');
+        const timeInMinutes = calculateTimeInMinutes(timeStr);
+
+        if (action === "IN") {
+            entryTimes[carNumber] = timeInMinutes;
+        } else if (action === "OUT") {
+            if (carNumber in entryTimes) {
+                const entryTime = entryTimes[carNumber];
+                const parkingDuration = timeInMinutes - entryTime;
+                if (carNumber in parkingTimes) {
+                    parkingTimes[carNumber] += parkingDuration;
+                } else {
+                    parkingTimes[carNumber] = parkingDuration;
+                }
+                delete entryTimes[carNumber];
+            }
+        }
+    });
+
+    // Process cars that didn't leave until 23:59
+    const endOfDay = calculateTimeInMinutes("23:59");
+    for (const carNumber in entryTimes) {
+        const entryTime = entryTimes[carNumber];
+        const parkingDuration = endOfDay - entryTime;
+        if (carNumber in parkingTimes) {
+            parkingTimes[carNumber] += parkingDuration;
+        } else {
+            parkingTimes[carNumber] = parkingDuration;
+        }
+    }
+
+    // Calculate fees
+    const feesResult = Object.keys(parkingTimes).sort().map(carNumber => {
+        const totalParkingTime = parkingTimes[carNumber];
+        let fee;
+        if (totalParkingTime <= defaultTime) {
+            fee = defaultFee;
+        } else {
+            const extraTime = totalParkingTime - defaultTime;
+            fee = defaultFee + Math.ceil(extraTime / unitTime) * unitFee;
+        }
+        return fee;
+    });
+
+    return feesResult;
+}
+
+// Test the solution with example inputs
+console.log(solution(
+    [180, 5000, 10, 600], 
+    ["05:34 5961 IN", "06:00 0000 IN", "06:34 0000 OUT", "07:59 5961 OUT", 
+     "07:59 0148 IN", "18:59 0000 IN", "19:09 0148 OUT", "22:59 5961 IN", "23:00 5961 OUT"]
+));
+// Expected output: [14600, 34400, 5000]
+
+console.log(solution(
+    [120, 0, 60, 591], 
+    ["16:00 3961 IN","16:00 0202 IN","18:00 3961 OUT","18:00 0202 OUT","23:58 3961 IN"]
+));
+// Expected output: [0, 591]
+
+console.log(solution(
+    [1, 461, 1, 10], 
+    ["00:00 1234 IN"]
+));
+// Expected output: [14841]
+
+function solution(word) {
+    const vowels = ['A', 'E', 'I', 'O', 'U'];
+    const positionMap = { 'A': 1, 'E': 2, 'I': 3, 'O': 4, 'U': 5 };
+    const multiplier = [781, 156, 31, 6, 1]; // 5^4 + 5^3 + 5^2 + 5^1 + 5^0
+
+    let position = 0;
+    for (let i = 0; i < word.length; i++) {
+        const char = word[i];
+        const charPosition = positionMap[char];
+        position += (charPosition - 1) * multiplier[i] + 1;
+    }
+
+    return position;
+}
+
+// Test cases
+console.log(solution("AAAAE")); // Expected output: 6
+console.log(solution("AAAE"));  // Expected output: 10
+console.log(solution("I"));     // Expected output: 1563
+console.log(solution("EIO"));   // Expected output: 1189
+
+function solution(numbers) {
+    const n = numbers.length;
+    const result = new Array(n).fill(-1);
+    const stack = [];
+
+    for (let i = 0; i < n; i++) {
+        while (stack.length > 0 && numbers[stack[stack.length - 1]] < numbers[i]) {
+            const index = stack.pop();
+            result[index] = numbers[i];
+        }
+        stack.push(i);
+    }
+
+    return result;
+}
+
+// Test cases
+console.log(solution([2, 3, 3, 5]));  // Expected output: [3, 5, 5, -1]
+console.log(solution([9, 1, 5, 3, 6, 2]));  // Expected output: [-1, 5, 6, 6, -1, -1]
