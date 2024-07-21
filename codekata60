@@ -1,0 +1,26 @@
+function solution(topping) {
+    let leftSet = new Set();
+    let rightSet = new Set();
+    let rightCount = new Array(topping.length).fill(0);
+
+    // Right to Left pass to fill the rightCount array
+    for (let i = topping.length - 1; i >= 0; i--) {
+        rightSet.add(topping[i]);
+        rightCount[i] = rightSet.size;
+    }
+
+    // Left to Right pass to count valid cuts
+    let validCuts = 0;
+    for (let i = 0; i < topping.length - 1; i++) {
+        leftSet.add(topping[i]);
+        if (leftSet.size === rightCount[i + 1]) {
+            validCuts += 1;
+        }
+    }
+
+    return validCuts;
+}
+
+// Test the solution with provided examples
+console.log(solution([1, 2, 1, 3, 1, 4, 1, 2])); // Expected output: 2
+console.log(solution([1, 2, 3, 1, 4])); // Expected output: 0
