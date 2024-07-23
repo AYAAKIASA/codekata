@@ -1,0 +1,31 @@
+function solution(numbers) {
+    let result = [];
+
+    for (let x of numbers) {
+        if (x % 2 === 0) {
+            result.push(x + 1);
+        } else {
+            let binX = x.toString(2).split(''); // Convert to binary string and split to an array
+            let idx = binX.lastIndexOf('0'); // Find the rightmost '0'
+
+            if (idx === -1) {
+                // If there is no '0', prepend '10' to the front (corner case for all bits being '1')
+                binX.unshift('1');
+                binX[1] = '0';
+            } else {
+                // Flip the rightmost '0' to '1' and the bit to the right (if any) to '0'
+                binX[idx] = '1';
+                if (idx + 1 < binX.length) {
+                    binX[idx + 1] = '0';
+                }
+            }
+
+            result.push(parseInt(binX.join(''), 2));
+        }
+    }
+
+    return result;
+}
+
+// Example usage:
+console.log(solution([2, 7]));  // Output: [3, 11]
