@@ -1,0 +1,104 @@
+class MinHeap {
+    constructor() {
+        this.heap = [];
+    }
+
+    push(val) {
+        this.heap.push(val);
+        this.bubbleUp();
+    }
+
+    pop() {
+        const min = this.heap[0];
+        const end = this.heap.pop();
+        if (this.heap.length > 0) {
+            this.heap[0] = end;
+            this.sinkDown();
+        }
+        return min;
+    }
+
+    bubbleUp() {
+        let idx = this.heap.length - 1;
+        const element = this.heap[idx];
+        while (idx > 0) {
+            let parentIdx = Math.floor((idx - 1) / 2);
+            let parent = this.heap[parentIdx];
+            if (element[0] >= parent[0]) break;
+            this.heap[parentIdx] = element;
+            this.heap[idx] = parent;
+            idx = parentIdx;
+        }
+    }
+
+    sinkDown() {
+        let idx = 0;
+        const length = this.heap.length;
+        const element = this.heap[0];
+        while (true) {
+            let leftChildIdx = 2 * idx + 1;
+            let rightChildIdx = 2 * idx + 2;
+            let leftChild, rightChild;
+            let swap = null;
+
+            if (leftChildIdx < length) {
+                leftChild = this.heap[leftChildIdx];
+                if (leftChild[0] < element[0]) {
+                    swap = leftChildIdx;
+                }
+            }
+
+            if (rightChildIdx < length) {
+                rightChild = this.heap[rightChildIdx];
+                if (
+                    (swap === null && rightChild[0] < element[0]) ||
+                    (swap !== null && rightChild[0] < leftChild[0])
+                ) {
+                    swap = rightChildIdx;
+                }
+            }
+
+            if (swap === null) break;
+            this.heap[idx] = this.heap[swap];
+            this.heap[swap] = element;
+            idx = swap;
+        }
+    }
+
+    size() {
+        return this.heap.length;
+    }
+}
+
+function solution(x, y, n) {
+    if (x === y) return 0;
+
+    let heap = new MinHeap();
+    let visited = new Set();
+
+    heap.push([0, x]);
+    visited.add(x);
+
+    while (heap.size() > 0) {
+        let [ops, current] = heap.pop();
+
+        // Define the next possible values
+        let nextValues = [current + n, current * 2, current * 3];
+
+        for (let next of nextValues) {
+            if (next === y) return ops + 1;
+
+            if (next < y && !visited.has(next)) {
+                visited.add(next);
+                heap.push([ops + 1, next]);
+            }
+        }
+    }
+
+    return -1;
+}
+
+// Example usage:
+console.log(solution(10, 40, 5));  // Output: 2
+console.log(solution(10, 40, 30)); // Output: 1
+console.log(solution(2, 5, 4));    // Output: -1
