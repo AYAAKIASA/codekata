@@ -1,0 +1,24 @@
+function solution(bridge_length, weight, truck_weights) {
+    let time = 0;
+    let bridge = [];
+    let bridge_weight = 0;
+    
+    while (truck_weights.length > 0 || bridge.length > 0) {
+        time++;
+        
+        // Move trucks on the bridge forward and remove them if they have crossed
+        if (bridge.length > 0 && bridge[0].end_time === time) {
+            bridge_weight -= bridge[0].weight;
+            bridge.shift();
+        }
+        
+        // Check if the next truck can be added to the bridge
+        if (truck_weights.length > 0 && (bridge_weight + truck_weights[0] <= weight) && bridge.length < bridge_length) {
+            let truck_weight = truck_weights.shift();
+            bridge.push({ weight: truck_weight, end_time: time + bridge_length });
+            bridge_weight += truck_weight;
+        }
+    }
+    
+    return time;
+}
