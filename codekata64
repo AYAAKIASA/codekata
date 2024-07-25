@@ -1,0 +1,15 @@
+function solution(numbers) {
+    // Convert each number to a string for comparison
+    let numStrs = numbers.map(String);
+
+    // Sort the numbers based on the custom comparator
+    numStrs.sort((a, b) => (b + a).localeCompare(a + b));
+
+    // If the highest number is '0', return '0' to avoid leading zeroes
+    if (numStrs[0] === '0') {
+        return '0';
+    }
+
+    // Join the sorted strings to form the largest number
+    return numStrs.join('');
+}
