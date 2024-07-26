@@ -13,3 +13,35 @@ function solution(numbers) {
     // Join the sorted strings to form the largest number
     return numStrs.join('');
 }
+
+function solution(numbers) {
+    let digitArr = numbers.split('');
+    let primeSet = new Set();
+
+    function getPermutations(arr, prefix) {
+        if (prefix.length > 0) {
+            let num = parseInt(prefix);
+            if (isPrime(num)) {
+                primeSet.add(num);
+            }
+        }
+
+        for (let i = 0; i < arr.length; i++) {
+            let newPrefix = prefix + arr[i];
+            let remaining = arr.slice(0, i).concat(arr.slice(i + 1));
+            getPermutations(remaining, newPrefix);
+        }
+    }
+
+    function isPrime(num) {
+        if (num < 2) return false;
+        for (let i = 2, sqrt = Math.sqrt(num); i <= sqrt; i++) {
+            if (num % i === 0) return false;
+        }
+        return true;
+    }
+
+    getPermutations(digitArr, '');
+
+    return primeSet.size;
+}
