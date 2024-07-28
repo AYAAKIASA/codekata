@@ -1,0 +1,29 @@
+function solution(order) {
+    const stack = [];
+    let currentIndex = 0;
+    let loadedCount = 0;
+    
+    for (let box = 1; box <= order.length; box++) {
+        // Try to load the current box from the main belt directly
+        if (box === order[currentIndex]) {
+            loadedCount++;
+            currentIndex++;
+        } else {
+            // Push the box onto the auxiliary container belt (stack)
+            stack.push(box);
+        }
+        
+        // While the top of the stack matches the current desired order, load from stack
+        while (stack.length > 0 && stack[stack.length - 1] === order[currentIndex]) {
+            stack.pop();
+            loadedCount++;
+            currentIndex++;
+        }
+    }
+    
+    return loadedCount;
+}
+
+// Example usage:
+console.log(solution([4, 3, 1, 2, 5]));  // Output: 2
+console.log(solution([5, 4, 3, 2, 1]));  // Output: 5
