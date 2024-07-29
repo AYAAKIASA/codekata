@@ -1,0 +1,25 @@
+function solution(number, k) {
+    let stack = [];
+    let len = number.length;
+    
+    for (let i = 0; i < len; i++) {
+        let current = number[i];
+        
+        while (k > 0 && stack.length > 0 && stack[stack.length - 1] < current) {
+            stack.pop();
+            k--;
+        }
+        
+        stack.push(current);
+    }
+    
+    // If there are still digits to remove, remove them from the end
+    stack = stack.slice(0, stack.length - k);
+    
+    return stack.join('');
+}
+
+// Test examples
+console.log(solution("1924", 2)); // "94"
+console.log(solution("1231234", 3)); // "3234"
+console.log(solution("4177252841", 4)); // "775841"
