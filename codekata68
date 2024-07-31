@@ -1,0 +1,32 @@
+function solution(sequence, k) {
+    let start = 0, end = 0;
+    let currentSum = 0;
+    let bestStart = 0, bestEnd = -1;
+    let minLength = Infinity;
+
+    while (end < sequence.length) {
+        // Expand the window by including sequence[end]
+        currentSum += sequence[end];
+        
+        // While the sum is greater than k, contract the window from the start
+        while (currentSum > k && start <= end) {
+            currentSum -= sequence[start];
+            start++;
+        }
+        
+        // Check if we found a valid subsequence with sum equal to k
+        if (currentSum === k) {
+            let currentLength = end - start + 1;
+            if (currentLength < minLength) {
+                minLength = currentLength;
+                bestStart = start;
+                bestEnd = end;
+            }
+        }
+        
+        // Move the end pointer to the right
+        end++;
+    }
+    
+    return [bestStart, bestEnd];
+}
