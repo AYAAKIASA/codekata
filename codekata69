@@ -32,3 +32,59 @@ function solution(queue1, queue2) {
 console.log(solution([3, 2, 7, 2], [4, 6, 5, 1])); // Output: 2
 console.log(solution([1, 2, 1, 2], [1, 10, 1, 2])); // Output: 7
 console.log(solution([1, 1], [1, 5])); // Output: -1
+
+function solution(maps) {
+    const rows = maps.length;
+    const cols = maps[0].length;
+    const visited = Array.from({ length: rows }, () => Array(cols).fill(false));
+    const directions = [[1, 0], [-1, 0], [0, 1], [0, -1]];
+    const islandSums = [];
+
+    function isInBounds(x, y) {
+        return x >= 0 && x < rows && y >= 0 && y < cols;
+    }
+
+    function dfs(x, y) {
+        const stack = [[x, y]];
+        let sum = 0;
+
+        while (stack.length > 0) {
+            const [cx, cy] = stack.pop();
+            if (!isInBounds(cx, cy) || maps[cx][cy] === 'X' || visited[cx][cy]) {
+                continue;
+            }
+
+            visited[cx][cy] = true;
+            sum += parseInt(maps[cx][cy]);
+
+            for (const [dx, dy] of directions) {
+                const nx = cx + dx;
+                const ny = cy + dy;
+                if (isInBounds(nx, ny) && maps[nx][ny] !== 'X' && !visited[nx][ny]) {
+                    stack.push([nx, ny]);
+                }
+            }
+        }
+        return sum;
+    }
+
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < cols; j++) {
+            if (maps[i][j] !== 'X' && !visited[i][j]) {
+                const islandSum = dfs(i, j);
+                islandSums.push(islandSum);
+            }
+        }
+    }
+
+    if (islandSums.length === 0) {
+        return [-1];
+    }
+
+    islandSums.sort((a, b) => a - b);
+    return islandSums;
+}
+
+// Example usage
+console.log(solution(["X591X", "X1X5X", "X231X", "1XXX1"])); // [1, 1, 27]
+console.log(solution(["XXX", "XXX", "XXX"])); // [-1]
