@@ -1,0 +1,46 @@
+function solution(n, wires) {
+    const buildGraph = (n, wires) => {
+        const graph = Array.from({ length: n + 1 }, () => []);
+        for (const [u, v] of wires) {
+            graph[u].push(v);
+            graph[v].push(u);
+        }
+        return graph;
+    };
+    
+    const bfsCountNodes = (start, exclude, graph) => {
+        const queue = [start];
+        const visited = new Array(graph.length).fill(false);
+        visited[start] = true;
+        let count = 0;
+        
+        while (queue.length > 0) {
+            const node = queue.shift();
+            count += 1;
+            for (const neighbor of graph[node]) {
+                if (!visited[neighbor] && !(node === exclude[0] && neighbor === exclude[1]) && !(node === exclude[1] && neighbor === exclude[0])) {
+                    visited[neighbor] = true;
+                    queue.push(neighbor);
+                }
+            }
+        }
+        
+        return count;
+    };
+    
+    const graph = buildGraph(n, wires);
+    let minDiff = Infinity;
+    
+    for (const [u, v] of wires) {
+        const nodesInSubtree = bfsCountNodes(u, [u, v], graph);
+        const diff = Math.abs(n - 2 * nodesInSubtree);
+        minDiff = Math.min(minDiff, diff);
+    }
+    
+    return minDiff;
+}
+
+// Example usage:
+console.log(solution(9, [[1,3],[2,3],[3,4],[4,5],[4,6],[4,7],[7,8],[7,9]])); // Output: 3
+console.log(solution(4, [[1,2],[2,3],[3,4]])); // Output: 0
+console.log(solution(7, [[1,2],[2,7],[3,7],[3,4],[4,5],[6,7]])); // Output: 1
