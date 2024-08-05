@@ -1,0 +1,53 @@
+function solution(N, road, K) {
+    // Create an adjacency list for the graph
+    const graph = Array.from({ length: N + 1 }, () => []);
+    for (const [a, b, c] of road) {
+        graph[a].push([b, c]);
+        graph[b].push([a, c]);
+    }
+
+    // Dijkstra's algorithm function
+    const dijkstra = (start) => {
+        const distances = Array(N + 1).fill(Infinity);
+        distances[start] = 0;
+        const pq = [[0, start]]; // Priority queue: [distance, node]
+        
+        while (pq.length > 0) {
+            // Get the node with the smallest distance
+            pq.sort((a, b) => a[0] - b[0]);
+            const [currentDistance, currentNode] = pq.shift();
+            
+            // If this distance is greater than the recorded shortest distance, skip it
+            if (currentDistance > distances[currentNode]) continue;
+            
+            // Explore neighbors
+            for (const [neighbor, weight] of graph[currentNode]) {
+                const distance = currentDistance + weight;
+                
+                if (distance < distances[neighbor]) {
+                    distances[neighbor] = distance;
+                    pq.push([distance, neighbor]);
+                }
+            }
+        }
+        
+        return distances;
+    };
+
+    // Perform Dijkstra's algorithm from village 1
+    const distances = dijkstra(1);
+    
+    // Count the number of villages within time K
+    let answer = 0;
+    for (let i = 1; i <= N; i++) {
+        if (distances[i] <= K) {
+            answer++;
+        }
+    }
+
+    return answer;
+}
+
+// Example usage:
+console.log(solution(5, [[1,2,1],[2,3,3],[5,2,2],[1,4,2],[5,3,1],[5,4,2]], 3)); // Output: 4
+console.log(solution(6, [[1,2,1],[1,3,2],[2,3,2],[3,4,3],[3,5,2],[3,5,3],[5,6,1]], 4)); // Output: 4
