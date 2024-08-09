@@ -15,3 +15,51 @@ function solution(storey) {
 
     return answer;
 }
+
+function solution(places) {
+    function isValidPlace(place) {
+        const directions = [
+            [0, 1], [1, 0], [-1, 0], [0, -1],
+            [0, 2], [2, 0], [-2, 0], [0, -2],
+            [1, 1], [1, -1], [-1, 1], [-1, -1]
+        ];
+        
+        for (let r = 0; r < 5; r++) {
+            for (let c = 0; c < 5; c++) {
+                if (place[r][c] === 'P') {
+                    for (const [dr, dc] of directions) {
+                        const nr = r + dr;
+                        const nc = c + dc;
+
+                        if (nr >= 0 && nr < 5 && nc >= 0 && nc < 5) {
+                            if (Math.abs(dr) + Math.abs(dc) === 1 && place[nr][nc] === 'P') {
+                                return false;
+                            }
+                            if (Math.abs(dr) + Math.abs(dc) === 2 && place[nr][nc] === 'P') {
+                                if (dr === 0 || dc === 0) {
+                                    const midR = r + dr / 2;
+                                    const midC = c + dc / 2;
+                                    if (place[midR][midC] !== 'X') {
+                                        return false;
+                                    }
+                                } else {
+                                    if (place[r][nc] !== 'X' || place[nr][c] !== 'X') {
+                                        return false;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
+    
+    const answer = [];
+    for (const place of places) {
+        answer.push(isValidPlace(place) ? 1 : 0);
+    }
+    
+    return answer;
+}
