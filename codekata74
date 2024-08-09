@@ -63,3 +63,35 @@ function solution(places) {
     
     return answer;
 }
+
+function gcd(a, b) {
+    while (b !== 0) {
+        let temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+
+function gcdArray(arr) {
+    return arr.reduce((acc, curr) => gcd(acc, curr));
+}
+
+function solution(arrayA, arrayB) {
+    let gcdA = gcdArray(arrayA);
+    let gcdB = gcdArray(arrayB);
+
+    // Check if gcdA divides any element in arrayB
+    let validA = arrayB.every(num => num % gcdA !== 0) ? gcdA : 0;
+
+    // Check if gcdB divides any element in arrayA
+    let validB = arrayA.every(num => num % gcdB !== 0) ? gcdB : 0;
+
+    // Return the maximum of the valid candidates
+    return Math.max(validA, validB);
+}
+
+// Example usage
+console.log(solution([10, 17], [5, 20])); // Output: 0
+console.log(solution([10, 20], [5, 17])); // Output: 10
+console.log(solution([14, 35, 119], [18, 30, 102])); // Output: 7
