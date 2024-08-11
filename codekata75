@@ -1,0 +1,16 @@
+function gcd(a, b) {
+    while (b !== 0) {
+        var temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+
+function solution(W, H) {
+    var gcdValue = gcd(W, H);
+    var unusableSquares = W + H - gcdValue;
+    var totalSquares = W * H;
+    var usableSquares = totalSquares - unusableSquares;
+    return usableSquares;
+}
