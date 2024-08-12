@@ -1,0 +1,20 @@
+function solution(weights) {
+    let count = 0;
+    const weightMap = new Map();
+    
+    for (let weight of weights) {
+        // Checking all the possible conditions
+        count += (weightMap.get(weight * 2) || 0);        // 2:4 (w1 * 2 = w2 * 4)
+        count += (weightMap.get(weight / 2) || 0);        // 4:2 (w1 * 4 = w2 * 2)
+        count += (weightMap.get(weight * 3 / 2) || 0);    // 2:3 (w1 * 2 = w2 * 3)
+        count += (weightMap.get(weight * 2 / 3) || 0);    // 3:2 (w1 * 3 = w2 * 2)
+        count += (weightMap.get(weight * 4 / 3) || 0);    // 3:4 (w1 * 3 = w2 * 4)
+        count += (weightMap.get(weight * 3 / 4) || 0);    // 4:3 (w1 * 4 = w2 * 3)
+        count += (weightMap.get(weight) || 0);            // Equal distances
+        
+        // Add the current weight to the map
+        weightMap.set(weight, (weightMap.get(weight) || 0) + 1);
+    }
+
+    return count;
+}
